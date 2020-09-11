@@ -1,0 +1,5 @@
+.checked {
+    font-style: italic;
+    text-decoration-line: line-through;
+    text-decoration-color: rgb(218, 218, 218);
+}
