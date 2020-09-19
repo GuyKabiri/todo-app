@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { auth, firestore } from '../services/firebase'
 import '../styles/LogInStyles.css'
 
 export default class LogIn extends Component {
@@ -8,6 +9,7 @@ export default class LogIn extends Component {
         this.state = {
             email: '',
             password: '',
+            err: '',
         }
 
         this.handleChange.bind(this.handleChange);
@@ -20,8 +22,17 @@ export default class LogIn extends Component {
         })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
+        const { email, password } = this.state;
+        try {
+            const { user } = await auth.signInWithEmailAndPassword(email, password);
+            this.setState({ email: '', password: '' });
+            const snapshot = await firestore.collection('users').doc(user.uid).get();
+            //  TODO: change path
+        } catch(err) {
+            this.setState({ err: err.message })
+        }
     }
 
     render() {
@@ -39,7 +50,7 @@ export default class LogIn extends Component {
                 </div>
                 <div className='input-field'>
                     <button className='btn blue darken-2 z-depth-2'>Login</button>
-                    <span className="helper-text right red-text">Helper text</span>
+                    <span className="helper-text right red-text">{ this.state.err }</span>
                 </div>
             </form>                
         </div>
