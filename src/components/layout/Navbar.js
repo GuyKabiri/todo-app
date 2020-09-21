@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import SignedInLinkes from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 
-const Navbar = () => {
+const Navbar = (props) => {
+    const { currentUser } = props;
     return (
     <nav className='navbar blue lighten-2'>
         <div className="nav-wrapper">
@@ -13,8 +14,9 @@ const Navbar = () => {
                 <i className="material-icons">menu</i>
             </Link>
             <ul className='right hide-on-med-and-down'>
-                <li><SignedInLinkes /></li>
-                <li><SignedOutLinks /></li>
+                { props.currentUser ? 
+                (<li><SignedInLinkes currentUser={currentUser} /></li>)   :
+                (<li><SignedOutLinks /></li>) }
             </ul>
         </div>
     </nav>

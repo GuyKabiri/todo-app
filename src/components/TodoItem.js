@@ -3,18 +3,14 @@ import '../styles/TodoItemStyles.css'
 
 const TodoItem = (props) => {
 
-    const {title, id, checked} = props.item;
+    const {title, text, id, checked} = props.item;
     const onToggle = props.toggle
-
-    const handleToggle = (e) => {
-
-    }
 
     return (
     <div>
     <div className='card blue-grey darken-1 z-depth-2'>
         <div className="card-content white-text">
-        <span className={`card-title ${ checked && 'checked' }`}>
+        <span className={`card-title ${ checked ? 'checked' : null }`}>
             Card Title { title }
             <div className='right'>
                 <label>
@@ -23,9 +19,8 @@ const TodoItem = (props) => {
                 </label>
             </div>
         </span>
-            <p className={ checked && 'checked'}>
-                I am a very simple card. I am good at containing small bits of information.
-                I am convenient because I require little markup to use effectively.
+            <p className={ checked ? 'checked' : null}>
+            { text }{ text }{ text }{ text }
             </p>
         </div>
         <div className="card-action">

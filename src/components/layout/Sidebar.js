@@ -2,7 +2,7 @@ import React from 'react'
 import '../../styles/SignedLinksStyles.css'
 import { Link } from 'react-router-dom'
 
-const Sidebar = () => {
+const Sidebar = ({currentUser}) => {
     return (
     <div className="collection sidebar">
         <Link to='/' className='collection-item'>Folder 1</Link>

@@ -1,11 +1,14 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+// import { logOutFunc } from '../../services/Auth'
+import { auth } from '../../services/firebase'
 
-const SignedInLinks = () => {
+const SignedInLinks = (props) => {
+    const { currentUser } = props;
     return (
         <ul className='right'>
             <li>
-                <NavLink to='/'>
+                <NavLink to='/login' onClick={() => auth.signOut() }>
                     Log Out
                 </NavLink>
             </li>
@@ -13,7 +16,7 @@ const SignedInLinks = () => {
                 <NavLink 
                     to='/'
                     className='btn btn-floating blue darken-2'>
-                        GK
+                        { currentUser.firstName[0] + currentUser.lastName[0] }
                 </NavLink>
             </li>
         </ul>

@@ -53,8 +53,9 @@ export default class SignUp extends Component {
                 confirmPassword: '',
                 err:'',
             })
+            
         } catch(err) {
-            const { code, message } = err;
+            const { message } = err;
             this.setState({ err: message })
         }
 

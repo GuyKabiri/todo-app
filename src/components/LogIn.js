@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { auth, firestore } from '../services/firebase'
+// import { logInFunc } from '../services/auth';
+import { auth } from '../services/firebase'
 import '../styles/LogInStyles.css'
 
 export default class LogIn extends Component {
@@ -24,15 +25,38 @@ export default class LogIn extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, password } = this.state;
+        const {email, password} = this.state;
+
         try {
-            const { user } = await auth.signInWithEmailAndPassword(email, password);
+            await auth.signInWithEmailAndPassword(email,password);
             this.setState({ email: '', password: '' });
-            const snapshot = await firestore.collection('users').doc(user.uid).get();
-            //  TODO: change path
-        } catch(err) {
-            this.setState({ err: err.message })
+        } catch (err) {
+            console.log(err);
         }
+
+        // const { err, user, snapshot } = await logInFunc(e, this.state);
+        // if (err) {
+        //     this.setState({ err })
+        // }
+        // else {
+        //     this.setState({
+        //         email: '',
+        //         password: '',
+        //         user,
+        //         snapshot,
+        //     })
+        // }
+        // // const { email, password } = this.state;
+        // // try {
+        // //     const { user } = await auth.signInWithEmailAndPassword(email, password);
+        // //     this.setState({ email: '', password: '' });
+        // //     const snapshot = await firestore.collection('users').doc(user.uid).get();
+        // //     //  TODO: change path
+        // //     console.log('login', user, snapshot)
+        // // } catch(err) {
+        // //     this.setState({ err: err.message })
+        // // }
+
     }
 
     render() {

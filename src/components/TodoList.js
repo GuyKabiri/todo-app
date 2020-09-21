@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
 import '../styles/TodoListStyles.css'
 import TodoItem from './TodoItem'
+import { auth, firestore } from '../services/firebase'
+import { Redirect } from 'react-router-dom';
 
 class TodoList extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            items: [
-                { title: 't1', id: '1', checked: false},
-                { title: 't2', id: '2', checked: true},
-                { title: 't3', id: '3', checked: false},
-                { title: 't4', id: '4', checked: false},
-                { title: 't5', id: '5', checked: false},
-                { title: 't6', id: '6', checked: false},
-            ],
+            currentUser: props.currentUser,
+            items: [],
         }
 
         this.toggleChecked.bind(this);
@@ -29,8 +25,25 @@ class TodoList extends Component {
         }))
     }
 
+    componentDidMount() {
+        if (this.state.currentUser) {
+            firestore.collection('todos').where('uid', '==', this.state.currentUser.id)
+            .onSnapshot( (snapshot) => {
+                var arr = []
+                snapshot.forEach( doc => {
+                    arr.push({ id: doc.id,
+                                ...doc.data() });
+                });
+                this.setState({
+                    items: [...arr],
+                })
+            })
+        }
+    }
+
     render() {
         return (
+            this.state.currentUser ? (
             <div className='row'>
                 <div className='col s4'>
                 {
@@ -41,7 +54,9 @@ class TodoList extends Component {
                 }
                 </div>
             </div>
-        )
+        )   :   (
+            <Redirect to='/login' />
+        ))
     }
 }
 
