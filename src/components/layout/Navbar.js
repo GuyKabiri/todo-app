@@ -9,7 +9,7 @@ const Navbar = (props) => {
     return (
     <nav className='navbar blue lighten-2'>
         <div className="nav-wrapper">
-            <Link to='#!' className='brand-logo'>Logo</Link>
+            <Link to='/' className='brand-logo'>Logo</Link>
             <Link to='#' className='sidenav-trigger'>
                 <i className="material-icons">menu</i>
             </Link>

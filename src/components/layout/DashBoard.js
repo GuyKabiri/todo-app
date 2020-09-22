@@ -5,7 +5,7 @@ import Sidebar from './Sidebar';
 const DashBoard = (props) => {
     const {currentUser} = props;
     return (
-        <div className='row'>
+        <div className='row '>
             <div className='col s3'>
                 <Sidebar currentUser={currentUser} />
             </div>

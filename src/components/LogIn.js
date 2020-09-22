@@ -33,30 +33,6 @@ export default class LogIn extends Component {
         } catch (err) {
             console.log(err);
         }
-
-        // const { err, user, snapshot } = await logInFunc(e, this.state);
-        // if (err) {
-        //     this.setState({ err })
-        // }
-        // else {
-        //     this.setState({
-        //         email: '',
-        //         password: '',
-        //         user,
-        //         snapshot,
-        //     })
-        // }
-        // // const { email, password } = this.state;
-        // // try {
-        // //     const { user } = await auth.signInWithEmailAndPassword(email, password);
-        // //     this.setState({ email: '', password: '' });
-        // //     const snapshot = await firestore.collection('users').doc(user.uid).get();
-        // //     //  TODO: change path
-        // //     console.log('login', user, snapshot)
-        // // } catch(err) {
-        // //     this.setState({ err: err.message })
-        // // }
-
     }
 
     render() {

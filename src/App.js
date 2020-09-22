@@ -3,9 +3,9 @@ import './App.css'
 import { auth, createUserProfileDocument } from './services/firebase'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
-import LogIn from './components/LogIn';
-import SignUp from './components/SignUp';
 import DashBoard from './components/layout/DashBoard';
+import LogInSignUp from './components/LogInSignUp';
+import AddTodoItem from './components/AddTodoItem';
 
 
 class App extends React.Component {
@@ -30,6 +30,7 @@ class App extends React.Component {
             }
           })
         })
+        
       }
       else {
         this.setState({ currentUser: userAuth });
@@ -45,18 +46,21 @@ class App extends React.Component {
     return (
       <BrowserRouter className='app'>
         <Navbar currentUser={this.state.currentUser} />
-        <div className='row'>
-          
-          <div className='col s9'>
-            <div className='bottom-section'>
-              <Switch>
-                <Route exact path='/' render={(props) => (
-                  <DashBoard {...props} currentUser={this.state.currentUser} />
-                )} />
-                <Route path='/login' component={LogIn} />
-                <Route path='/signup' component={SignUp} />
-              </Switch>
-            </div>
+        <div className='bottom-section row'>
+          <div className='col s12'>
+            { this.state.currentUser ? (
+            <Switch>
+              <Route exact path='/' render={(props) => (
+                <DashBoard {...props} currentUser={this.state.currentUser} />
+              )} />
+              <Route path='/add' render={(props) => (
+                <AddTodoItem {...props} currentUser={this.state.currentUser} />
+              )} />
+              
+            </Switch>
+            ) : (
+            <Route path='/auth' component={LogInSignUp} />
+            ) }
           </div>
         </div>
       </BrowserRouter>
