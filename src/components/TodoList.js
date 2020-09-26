@@ -3,6 +3,7 @@ import '../styles/TodoListStyles.css'
 import TodoItem from './TodoItem'
 import { firestore } from '../services/firebase'
 import { Redirect } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
 
 class TodoList extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class TodoList extends Component {
         }
 
         this.toggleChecked.bind(this);
+        this.deleteAction.bind(this);
     }
 
     toggleChecked = (e) => {
@@ -34,11 +36,24 @@ class TodoList extends Component {
         }
     }
 
+    deleteAction = (id) => {
+        try {
+            firestore.collection('todos').doc(id).delete()
+            .then( () =>  this.setState((prevState) => ({
+                    items: [...prevState.items.filter( (item) => item.id !== id)]
+                }))
+            )
+        }
+        catch (e) {
+            console.log(e.message)
+        }
+    }
+
     componentDidMount() {
         if (this.state.currentUser) {
             firestore.collection('todos')
-            .where('uid', '==', this.state.currentUser.id)
-            .get().then((snapshot) => {
+            .where('uid', '==', this.state.currentUser.id).get()
+            .then( (snapshot) => {
                 var arr = []
                 snapshot.forEach( doc => {
                     arr.push({ id: doc.id,
@@ -52,19 +67,39 @@ class TodoList extends Component {
         }
     }
 
+    renderColuomn = (startIndex) => {
+        let arr = []
+        const {items} = this.state;
+        for (let i = startIndex; i < items.length; i += 3) {
+            arr.push(items[i]);
+        }
+        return arr.map( (item) => (
+            <Grid item key={item.id} className='item'>
+                <TodoItem item={item} toggle={this.toggleChecked} deleteAction={this.deleteAction} />
+            </Grid>
+        ))
+    }
+
     render() {
         return (
-            this.state.currentUser ? (
-            <div>
-            {
-                this.state.items ?
-                this.state.items.map( (item) => (
-                    <div className='col s4'>
-                    <TodoItem item={item} toggle={this.toggleChecked} key={item.id} />
-                    </div> ))
-                    : null
-            }
-            </div>
+            this.state.currentUser && this.state.items ? (
+            <Grid container spacing={2} direction='row' justify='center' alignItems='flex-start'>
+                <Grid container item xs={4} spacing={2} direction='column' justify='flex-start' alignItems='center'>
+                    {    
+                            this.renderColuomn(0) 
+                    }
+                </Grid>
+                <Grid container item xs={4} spacing={2} direction='column' justify='flex-start' alignItems='center'>
+                    {    
+                            this.renderColuomn(1) 
+                    }
+                </Grid>
+                <Grid container item xs={4} spacing={2} direction='column' justify='flex-start' alignItems='center'>
+                    {    
+                            this.renderColuomn(2) 
+                    }
+                </Grid>
+            </Grid>
         )   :   (
             <Redirect to='/login' />
         ))

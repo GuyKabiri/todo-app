@@ -1,3 +1,4 @@
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import React, { Component } from 'react'
 import { auth, createUserProfileDocument } from '../services/firebase'
 import '../styles/SignUpStyles.css'
@@ -7,8 +8,8 @@ export default class SignUp extends Component {
         super(props);
 
         this.state = {
-            email: '',
-            password: '',
+            signup_email: '',
+            signup_password: '',
             confirmPassword: '',
             firstName:'',
             lastName:'',
@@ -21,21 +22,21 @@ export default class SignUp extends Component {
 
     handleChange = (e) => {
         this.setState({
+            [e.target.id]: e.target.value,
             err: '',
-            [e.target.id]: e.target.value
         })
     }    
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const { email, password, confirmPassword, firstName, lastName } = this.state;
-        if (password !== confirmPassword) {
+        const { signup_email, signup_password, confirmPassword, firstName, lastName } = this.state;
+        if (signup_password !== confirmPassword) {
             this.setState({
                 err: 'Passwords are not match!',
             })
             return;
         }
-        else if (!email || !password || !confirmPassword || !firstName || !lastName) {
+        else if (!signup_email || !signup_password || !confirmPassword || !firstName || !lastName) {
             this.setState({
                 err: 'All fields required!',
             })
@@ -43,13 +44,13 @@ export default class SignUp extends Component {
         }
         
         try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
+            const { user } = await auth.createUserWithEmailAndPassword(signup_email, signup_password);
             await createUserProfileDocument(user, { firstName, lastName });
             this.setState({
                 firstName: '',
                 lastName: '',
-                email: '',
-                password: '',
+                signup_email: '',
+                signup_password: '',
                 confirmPassword: '',
                 err:'',
             })
@@ -63,37 +64,75 @@ export default class SignUp extends Component {
 
     render() {
         return (
-        <div className='container signup-form'>
+            <Grid container className='signup-form'>
+            <Grid item xs={12}>
             <form className='white' onSubmit={this.handleSubmit}>
-                <h5 className='grey-text text-darken-3'>Sign Up</h5>
-                <div className='input-field'>
-                    <label htmlFor='email'>Email</label>
-                    <input type='email' id='email' onChange={this.handleChange} />                    
-                </div>
-                <div className='input-field'>
-                    <label htmlFor='password'>Password</label>
-                    <input type='password' id='password' onChange={this.handleChange} />                    
-                </div>
-                <div className='input-field'>
-                    <label htmlFor='confirmPassword'>Confirm Password</label>
-                    <input type='password' id='confirmPassword' onChange={this.handleChange} />                    
-                </div>
-                <div className='row'>
-                    <div className='input-field col s6'>
-                        <label htmlFor='firstName'>First Name</label>
-                        <input type='text' id='firstName' onChange={this.handleChange} />                    
-                    </div>
-                    <div className='input-field col s6'>
-                        <label htmlFor='lastName'>Last Name</label>
-                        <input type='text' id='lastName' onChange={this.handleChange} />                    
-                    </div>
-                </div>
-                <div className='input-field'>
-                    <button className='btn blue darken-2 z-depth-2'>Sign Up</button>
-                    <span className="helper-text right red-text">{ this.state.err }</span>
-                </div>
-            </form>                
-        </div>
+                <Typography variant='h5'>
+                    Sign Up
+                </Typography>
+                <TextField id='signup_email'
+                            label="Email"
+                            value={this.state.signup_email} 
+                            onChange={this.handleChange} 
+                            fullWidth
+                            margin='dense'
+                            type='email'
+                             />
+                    
+                <TextField id='signup_password'
+                            label="Password"
+                            value={this.state.signup_password} 
+                            onChange={this.handleChange} 
+                            fullWidth
+                            margin='dense'
+                            type='password'
+                             />
+                
+                <TextField id='confirmPassword'
+                            label="Confirm Password"
+                            value={this.state.confirmPassword} 
+                            onChange={this.handleChange} 
+                            fullWidth
+                            margin='dense'
+                            type='password'
+                             />
+
+                <Grid container spacing={1}>
+                    <Grid item sm>
+                        <TextField id='firstName'
+                                    label="First Name"
+                                    value={this.state.firstName} 
+                                    onChange={this.handleChange} 
+                                    fullWidth
+                                    margin='dense'
+                                    type='text'
+                                    />
+                    </Grid>
+
+                    <Grid item sm>
+                        <TextField id='lastName'
+                                    label="Last Name"
+                                    value={this.state.lastName} 
+                                    onChange={this.handleChange} 
+                                    fullWidth
+                                    margin='dense'
+                                    type='text'
+                                    />
+                    </Grid>
+                </Grid>
+                <Grid container direction="row" justify="space-between" alignItems="center">
+                    <Grid item>
+                        <Button variant='outlined' onClick={this.handleSubmit}>Sign Up</Button>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="caption" color="error">
+                            { this.state.err }
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </form>
+            </Grid>
+        </Grid>              
         )
     }
 }

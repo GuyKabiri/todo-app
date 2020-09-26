@@ -3,3 +3,13 @@
     text-decoration-line: line-through;
     text-decoration-color: rgb(218, 218, 218);
 }
+
+.card-content {
+    max-height: 180px;
+    overflow: hidden;
+    padding: 10px !important;
+}
+
+.card {
+    /* background-color: blue !important; */
+}

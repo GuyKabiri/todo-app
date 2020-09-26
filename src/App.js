@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar';
 import DashBoard from './components/layout/DashBoard';
 import LogInSignUp from './components/LogInSignUp';
 import AddTodoItem from './components/AddTodoItem';
+import { Grid } from '@material-ui/core';
 
 
 class App extends React.Component {
@@ -46,14 +47,14 @@ class App extends React.Component {
     return (
       <BrowserRouter className='app'>
         <Navbar currentUser={this.state.currentUser} />
-        <div className='bottom-section row'>
-          <div className='col s12'>
+        <Grid container direction='row' justify='space-between' alignItems='flex-start' className='bottom-section'>
+          <Grid item xs={12}>
             { this.state.currentUser ? (
             <Switch>
               <Route exact path='/' render={(props) => (
                 <DashBoard {...props} currentUser={this.state.currentUser} />
               )} />
-              <Route path='/add' render={(props) => (
+              <Route path='/add/:id?' render={(props) => (
                 <AddTodoItem {...props} currentUser={this.state.currentUser} />
               )} />
               
@@ -61,8 +62,8 @@ class App extends React.Component {
             ) : (
             <Route path='/auth' component={LogInSignUp} />
             ) }
-          </div>
-        </div>
+          </Grid>
+        </Grid>
       </BrowserRouter>
     );
   }

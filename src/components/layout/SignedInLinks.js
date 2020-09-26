@@ -1,25 +1,28 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-// import { logOutFunc } from '../../services/Auth'
+import { Button, Grid, IconButton, Typography } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom';
+import Avatar from '@material-ui/core/Avatar'
 import { auth } from '../../services/firebase'
 
 const SignedInLinks = (props) => {
     const { currentUser } = props;
     return (
-        <ul className='right'>
-            <li>
-                <NavLink to='/login' onClick={() => auth.signOut() }>
+        <Grid container direction="row" justify="flex-start" alignItems="center">
+            <Grid item>
+                <Button component={RouterLink} to="/" onClick={() => auth.signOut() } className='link-with-icon'>
                     Log Out
-                </NavLink>
-            </li>
-            <li>
-                <NavLink 
-                    to='/'
-                    className='btn btn-floating blue darken-2'>
+                </Button>
+            </Grid>
+            <Grid item>
+                <IconButton to='/' component={RouterLink}>
+                    <Avatar color='secondary'>
+                        <Typography>
                         { currentUser.firstName[0] + currentUser.lastName[0] }
-                </NavLink>
-            </li>
-        </ul>
+                        </Typography>
+                    </Avatar>
+                </IconButton>
+            </Grid>
+        </Grid>
     )
 }
 

@@ -1,3 +1,4 @@
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import React, { Component } from 'react'
 // import { logInFunc } from '../services/auth';
 import { auth } from '../services/firebase'
@@ -19,13 +20,20 @@ export default class LogIn extends Component {
 
     handleChange = (e) => {
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
+            err: '',
         })
     }
 
     handleSubmit = async (e) => {
         e.preventDefault();
         const {email, password} = this.state;
+        if (!email || !password) {
+            this.setState({
+                err: 'All fields required!'
+            });
+            return;
+        }
 
         try {
             await auth.signInWithEmailAndPassword(email,password);
@@ -37,23 +45,43 @@ export default class LogIn extends Component {
 
     render() {
         return (
-        <div className='container login-form'>
+        <Grid container className='login-form'>
+            <Grid item xs={12}>
             <form className='white' onSubmit={this.handleSubmit}>
-                <h5 className='grey-text text-darken-3'>Sign In</h5>
-                <div className='input-field'>
-                    <label htmlFor='email' className={{active: 'email'}}>Email</label>
-                    <input type='email' id='email' onChange={this.handleChange} />                    
-                </div>
-                <div className='input-field'>
-                    <label htmlFor='password'>Password</label>
-                    <input type='password' id='password' onChange={this.handleChange} />                    
-                </div>
-                <div className='input-field'>
-                    <button className='btn blue darken-2 z-depth-2'>Login</button>
-                    <span className="helper-text right red-text">{ this.state.err }</span>
-                </div>
-            </form>                
-        </div>
+                <Typography variant='h5'>
+                    Log In
+                </Typography>
+                <TextField id='email'
+                            label="Email"
+                            value={this.state.email} 
+                            onChange={this.handleChange} 
+                            fullWidth
+                            margin='dense'
+                            type='email'
+                             />
+
+                <TextField id='password'
+                            label="Password"
+                            value={this.state.password} 
+                            onChange={this.handleChange} 
+                            fullWidth
+                            margin='dense'
+                            type='password'
+                             />
+
+                <Grid container direction="row" justify="space-between" alignItems="center">
+                    <Grid item>
+                        <Button variant='outlined' onClick={this.handleSubmit}>Log In</Button>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="caption" color="error">
+                            { this.state.err }
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </form>
+            </Grid>
+        </Grid>
         )
     }
 }

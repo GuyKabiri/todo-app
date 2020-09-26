@@ -1,22 +1,21 @@
 import React from 'react'
 import '../../styles/SignedLinksStyles.css'
-import { Link } from 'react-router-dom'
+import { Link as RouteLink } from 'react-router-dom'
+import { List, ListItem, ListItemIcon, ListItemText, Paper } from '@material-ui/core'
+import { CreateNewFolder } from '@material-ui/icons';
 
 const Sidebar = ({currentUser}) => {
     return (
-    <div className="collection sidebar">
-        <Link to='/' className='collection-item'>Folder 1</Link>
-        <Link to='/' className='collection-item active'>Folder 2</Link>
-        <Link to='/' className='collection-item'>Folder 3</Link>
-        <Link to='/' className='collection-item'>Folder 4</Link>
-        <Link to='/add' className="collection-item">
-            <div>
-                Create New Folder
-                <i className='material-icons secondary-content'>create_new_folder</i>
-            </div>
-        </Link>
-    </div>
-    
+    <Paper elevation={3}>
+        <List component="nav" aria-label="main mailbox folders">
+            <ListItem button component={RouteLink} to='/add'>
+                <ListItemIcon>
+                    <CreateNewFolder />
+                </ListItemIcon>
+                <ListItemText primary="Add Item" />
+            </ListItem>
+        </List>
+    </Paper>
     )
 }
 

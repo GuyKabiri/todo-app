@@ -1,16 +1,17 @@
+import { Grid } from '@material-ui/core'
 import React from 'react'
 import LogIn from './LogIn'
 import SignUp from './SignUp'
 
 export default function LogInSignUp() {
     return (
-        <div className='row'>
-            <div className='col s6'>
+        <Grid container direction='row' justify='space-around' alignItems='flex-start' spacing={1}>
+            <Grid item xs={5}>
                 <LogIn />
-            </div>
-            <div className='col s6'>
+            </Grid>
+            <Grid item xs={5}>
                 <SignUp />
-            </div>            
-        </div>
+            </Grid>
+        </Grid>
     )
 }

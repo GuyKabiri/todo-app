@@ -1,18 +1,18 @@
 import React from 'react'
 import '../../styles/SignedLinksStyles.css'
-import { NavLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
+import { Fingerprint } from '@material-ui/icons';
+import { Button, Link } from '@material-ui/core';
 
 const SignedOutLinks = () => {
     return (
-        <ul className='right'>
-            {/* <li><NavLink to='/signup'>Sign Up</NavLink></li> */}
-            <li>
-                <NavLink to='/auth' className='link-with-icon'>
-                    <i className="material-icons circle">login</i>
+        <div>
+            <Button startIcon={<Fingerprint className='link-with-icon' />}>
+                <Link to='/auth' className='link-with-icon' component={RouterLink} underline='none'>
                     Log In / Sign Up
-                </NavLink>
-            </li>
-        </ul>
+                </Link>
+            </Button>
+        </div>
     )
 }
 

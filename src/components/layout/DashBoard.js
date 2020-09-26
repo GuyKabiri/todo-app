@@ -1,3 +1,4 @@
+import { Grid } from '@material-ui/core';
 import React from 'react'
 import TodoList from '../TodoList';
 import Sidebar from './Sidebar';
@@ -5,14 +6,14 @@ import Sidebar from './Sidebar';
 const DashBoard = (props) => {
     const {currentUser} = props;
     return (
-        <div className='row '>
-            <div className='col s3'>
+        <Grid container spacing={3}>
+            <Grid item sm={3}>
                 <Sidebar currentUser={currentUser} />
-            </div>
-            <div className='col s9'>
+            </Grid>
+            <Grid item sm={9}>
                 <TodoList currentUser={currentUser} />
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     )
 }
 
