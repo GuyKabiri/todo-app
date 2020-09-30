@@ -6,10 +6,15 @@ import { auth } from '../../services/firebase'
 
 const SignedInLinks = (props) => {
     const { currentUser } = props;
+
+    const signOut = () => {
+        auth.signOut();
+    }
+
     return (
         <Grid container direction="row" justify="flex-start" alignItems="center">
             <Grid item>
-                <Button component={RouterLink} to="/" onClick={() => auth.signOut() } className='link-with-icon'>
+                <Button onClick={ () => signOut() } className='link-with-icon'>
                     Log Out
                 </Button>
             </Grid>

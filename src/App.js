@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css'
 import { auth, createUserProfileDocument } from './services/firebase'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import DashBoard from './components/layout/DashBoard';
 import LogInSignUp from './components/LogInSignUp';
@@ -31,7 +31,6 @@ class App extends React.Component {
             }
           })
         })
-        
       }
       else {
         this.setState({ currentUser: userAuth });
@@ -45,11 +44,11 @@ class App extends React.Component {
 
   render () {
     return (
-      <BrowserRouter className='app'>
+      <BrowserRouter>
         <Navbar currentUser={this.state.currentUser} />
         <Grid container direction='row' justify='space-between' alignItems='flex-start' className='bottom-section'>
           <Grid item xs={12}>
-            { this.state.currentUser ? (
+ 
             <Switch>
               <Route exact path='/' render={(props) => (
                 <DashBoard {...props} currentUser={this.state.currentUser} />
@@ -57,11 +56,15 @@ class App extends React.Component {
               <Route path='/add/:id?' render={(props) => (
                 <AddTodoItem {...props} currentUser={this.state.currentUser} />
               )} />
-              
+              <Route path='/auth' render={(props) => (
+                <LogInSignUp {...props} currentUser={this.state.currentUser} />
+              )} />
             </Switch>
-            ) : (
-            <Route path='/auth' component={LogInSignUp} />
-            ) }
+
+            { this.state.currentUser ? null :
+              <Redirect to='/auth' /> 
+            }
+
           </Grid>
         </Grid>
       </BrowserRouter>

@@ -1,6 +1,5 @@
-import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import React, { Component } from 'react'
-// import { logInFunc } from '../services/auth';
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
 import { auth } from '../services/firebase'
 import '../styles/LogInStyles.css'
 
@@ -37,7 +36,7 @@ export default class LogIn extends Component {
 
         try {
             await auth.signInWithEmailAndPassword(email,password);
-            this.setState({ email: '', password: '' });
+
         } catch (err) {
             console.log(err);
         }

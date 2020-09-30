@@ -14,6 +14,7 @@ export default class AddTodoItem extends Component {
             text: '',
             err: '',
             currentUser: props.currentUser,
+            history: this.props.history,
         }
 
         this.handleSubmit.bind(this);
@@ -83,6 +84,7 @@ export default class AddTodoItem extends Component {
                     err: '',
                 })
             }
+            this.state.history.push('/')
         }
         catch (err) {
             console.log(err.message)

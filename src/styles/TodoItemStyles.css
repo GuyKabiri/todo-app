@@ -11,5 +11,13 @@
 }
 
 .card {
-    /* background-color: blue !important; */
+    background-color: rgb(212, 212, 212) !important;
+}
+
+.date {
+    color: rgb(78, 78, 78);
+}
+
+.action-section {
+    border-top: 1px solid gray !important;
 }
