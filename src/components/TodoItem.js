@@ -62,9 +62,9 @@ const TodoItem = (props) => {
         { text.length > 280 && (
         <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-            <Typography>
-                { text }
-            </Typography>
+                <Typography>
+                    { text }
+                </Typography>
             </CardContent>
         </Collapse>
         )}

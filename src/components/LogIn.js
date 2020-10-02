@@ -37,8 +37,8 @@ export default class LogIn extends Component {
         try {
             await auth.signInWithEmailAndPassword(email,password);
 
-        } catch (err) {
-            console.log(err);
+        } catch ({ message }) {
+            this.setState({ err: message })
         }
     }
 
@@ -68,7 +68,7 @@ export default class LogIn extends Component {
                             type='password'
                              />
 
-                <Grid container direction="row" justify="space-between" alignItems="center">
+                <Grid container direction="row" justify="flex-start" alignItems="center" spacing={3}>
                     <Grid item>
                         <Button variant='outlined' onClick={this.handleSubmit}>Log In</Button>
                     </Grid>

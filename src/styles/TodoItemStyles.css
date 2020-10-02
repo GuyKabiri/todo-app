@@ -12,6 +12,7 @@
 
 .card {
     background-color: rgb(212, 212, 212) !important;
+    /* max-width: 280px !important; */
 }
 
 .date {

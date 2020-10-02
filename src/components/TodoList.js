@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/TodoListStyles.css'
 import TodoItem from './TodoItem'
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 const TodoList = (props) => {
 
@@ -19,7 +19,7 @@ const TodoList = (props) => {
         ))
     }
 
-    return ( items ? (
+    return ( items && items.length > 0 ? (
         <Grid container spacing={2} direction='row' justify='center' alignItems='flex-start'>
             <Grid container item xs={4} spacing={2} direction='column' justify='flex-start' alignItems='center'>
                 {    
@@ -38,7 +38,13 @@ const TodoList = (props) => {
             </Grid>
         </Grid>
     )   :   (
-        null
+        <Grid container direction='row' justify='center' alignItems='center' className='fullheight'>
+            <Grid item>
+                <Typography variant='h6'>
+                    No items to show.
+                </Typography>
+            </Grid>
+        </Grid>
     ))
 }
 

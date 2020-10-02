@@ -1,21 +1,25 @@
 import React from 'react'
 import { firestore } from '../../services/firebase'
-import { Grid } from '@material-ui/core';
+import { CircularProgress, Grid } from '@material-ui/core';
 import TodoList from '../TodoList';
 import Sidebar from './Sidebar';
+import '../../styles/DashBoardStyles.css'
 
 class DashBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             ...props,
-            items: [],
+            items: null,
             search: '',
         }
 
         this.toggleChecked.bind(this);
         this.deleteAction.bind(this);
         this.handleSearch.bind(this);
+        this.filterItems.bind(this);
+        this.sortByChecked.bind(this);
+        this.reloadItems.bind(this);
     }
 
     toggleChecked = (e) => {
@@ -50,6 +54,10 @@ class DashBoard extends React.Component {
     }
 
     componentDidMount() {
+        this.reloadItems();
+    }
+
+    reloadItems = () => {
         if (this.state.currentUser) {
             firestore.collection('todos')
             .where('uid', '==', this.state.currentUser.id).get()
@@ -61,7 +69,7 @@ class DashBoard extends React.Component {
                 });
                 arr.sort( (a, b) => b.createdAt.toDate() - a.createdAt.toDate());
                 this.setState({
-                    items: [...arr],
+                    items: [...this.sortByChecked(arr)],
                 })
             })
         }
@@ -71,7 +79,11 @@ class DashBoard extends React.Component {
         this.setState({ search: e.target.value });
     }
 
-    renderItem = (text) => {
+    sortByChecked = (items) => {
+        return [...items.filter( (item) => !item.checked ), ...items.filter( (item) => item.checked )]
+    }
+
+    filterItems = (text) => {
         return this.state.items.filter( (item) => item.title.includes(text) || item.text.includes(text) )
     }
 
@@ -79,10 +91,18 @@ class DashBoard extends React.Component {
         return (
             <Grid container spacing={0}>
                 <Grid item sm={3}>
-                    <Sidebar currentUser={this.props.currentUser} search={this.state.search} handleSearch={this.handleSearch} />
+                    <Sidebar currentUser={this.props.currentUser} handleSearch={this.handleSearch} reload={this.reloadItems} />
                 </Grid>
                 <Grid item sm={9}>
-                    <TodoList items={this.renderItem(this.state.search)} deleteAction={this.deleteAction} toggleChecked={this.toggleChecked} />
+                    { this.state.items ? (
+                        <TodoList items={this.filterItems(this.state.search)} deleteAction={this.deleteAction} toggleChecked={this.toggleChecked} />
+                    ) : (
+                        <Grid container direction='row' justify='center' alignItems='center' className='fullheight'>
+                            <Grid item>
+                                <CircularProgress />
+                            </Grid>
+                        </Grid>
+                    )}
                 </Grid>
             </Grid>
         )

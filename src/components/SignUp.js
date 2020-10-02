@@ -47,8 +47,7 @@ export default class SignUp extends Component {
             const { user } = await auth.createUserWithEmailAndPassword(signup_email, signup_password);
             await createUserProfileDocument(user, { firstName, lastName });
                         
-        } catch(err) {
-            const { message } = err;
+        } catch({ message }) {
             this.setState({ err: message })
         }
 
@@ -112,7 +111,7 @@ export default class SignUp extends Component {
                                     />
                     </Grid>
                 </Grid>
-                <Grid container direction="row" justify="space-between" alignItems="center">
+                <Grid container direction="row" justify="flex-start" alignItems="center" spacing={3}>
                     <Grid item>
                         <Button variant='outlined' onClick={this.handleSubmit}>Sign Up</Button>
                     </Grid>
