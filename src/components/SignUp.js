@@ -89,7 +89,7 @@ export default class SignUp extends Component {
                              />
 
                 <Grid container spacing={1}>
-                    <Grid item sm>
+                    <Grid item xs={12} sm>
                         <TextField id='firstName'
                                     label="First Name"
                                     value={this.state.firstName} 
@@ -100,7 +100,7 @@ export default class SignUp extends Component {
                                     />
                     </Grid>
 
-                    <Grid item sm>
+                    <Grid item xs={12} sm>
                         <TextField id='lastName'
                                     label="Last Name"
                                     value={this.state.lastName} 

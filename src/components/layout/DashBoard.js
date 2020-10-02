@@ -89,11 +89,11 @@ class DashBoard extends React.Component {
 
     render() {
         return (
-            <Grid container spacing={0}>
-                <Grid item sm={3}>
+            <Grid container spacing={1}>
+                <Grid item xs={12} md={3}>
                     <Sidebar currentUser={this.props.currentUser} handleSearch={this.handleSearch} reload={this.reloadItems} />
                 </Grid>
-                <Grid item sm={9}>
+                <Grid item xs={12} md={9}>
                     { this.state.items ? (
                         <TodoList items={this.filterItems(this.state.search)} deleteAction={this.deleteAction} toggleChecked={this.toggleChecked} />
                     ) : (

@@ -9,10 +9,10 @@ export default function LogInSignUp(props) {
         <Redirect to='/' />
         ) : (
         <Grid container direction='row' justify='space-around' alignItems='flex-start' spacing={1}>
-            <Grid item xs={5}>
+            <Grid item xs={12} sm={5}>
                 <LogIn />
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={12} sm={5}>
                 <SignUp />
             </Grid>
         </Grid>
