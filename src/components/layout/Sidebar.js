@@ -6,7 +6,7 @@ import { CreateNewFolder } from '@material-ui/icons';
 import { Search } from '@material-ui/icons';
 import ReplayIcon from '@material-ui/icons/Replay';
 
-const Sidebar = ({ handleSearch, reload }) => {
+const Sidebar = ({ search, handleSearch, reload }) => {
     return (
     <Paper elevation={3}>
         <List className='fullwidth'>
@@ -14,7 +14,7 @@ const Sidebar = ({ handleSearch, reload }) => {
                 <TextField
                     id='search'
                     label='Search'
-                    value=''
+                    value={search}
                     onChange={handleSearch} 
                     fullWidth
                     margin='dense'

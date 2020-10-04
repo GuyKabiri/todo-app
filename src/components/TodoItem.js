@@ -5,6 +5,7 @@ import '../styles/TodoItemStyles.css'
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 
 const TodoItem = (props) => {
@@ -17,7 +18,6 @@ const TodoItem = (props) => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
 
     const options = { 
         weekday: 'short', 
@@ -90,7 +90,11 @@ const TodoItem = (props) => {
                         aria-expanded={expanded}
                         aria-label="show more"
                         >
-                        <ExpandMoreIcon />
+                        { expanded ? (
+                            <ExpandLessIcon />
+                        )   :   (
+                            <ExpandMoreIcon />
+                        )   }
                     </IconButton>
                     )}
                 </Grid>

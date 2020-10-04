@@ -44,7 +44,7 @@ class App extends React.Component {
 
   render () {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Navbar currentUser={this.state.currentUser} />
         <Grid container direction='row' justify='space-between' alignItems='flex-start' className='bottom-section'>
           <Grid item xs={12}>

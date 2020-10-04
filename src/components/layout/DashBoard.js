@@ -91,7 +91,7 @@ class DashBoard extends React.Component {
         return (
             <Grid container spacing={1}>
                 <Grid item xs={12} md={3}>
-                    <Sidebar currentUser={this.props.currentUser} handleSearch={this.handleSearch} reload={this.reloadItems} />
+                    <Sidebar currentUser={this.props.currentUser} handleSearch={this.handleSearch} reload={this.reloadItems} search={this.state.search} />
                 </Grid>
                 <Grid item xs={12} md={9}>
                     { this.state.items ? (
